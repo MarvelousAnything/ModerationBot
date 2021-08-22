@@ -1,8 +1,8 @@
 package com.yoursole1.command;
 
 import com.yoursole1.command.annotation.Command;
-import com.yoursole1.command.exception.UnableToInvokeCommandException;
 import com.yoursole1.command.exception.NotACommandException;
+import com.yoursole1.command.exception.UnableToInvokeCommandException;
 import com.yoursole1.service.AdminService;
 import com.yoursole1.service.ModeratorService;
 import lombok.Getter;

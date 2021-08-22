@@ -15,4 +15,8 @@ public final class ModeratorService extends AbstractStaticFileMemberService {
         }
         return instance;
     }
+
+    static {
+        getInstance();
+    }
 }

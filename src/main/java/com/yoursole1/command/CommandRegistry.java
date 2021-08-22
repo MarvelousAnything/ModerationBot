@@ -2,7 +2,11 @@ package com.yoursole1.command;
 
 import com.yoursole1.command.annotation.Command;
 import com.yoursole1.command.annotation.Commands;
-import com.yoursole1.service.*;
+import com.yoursole1.service.AbstractStaticFileMemberService;
+import com.yoursole1.service.AdminService;
+import com.yoursole1.service.BannedWordService;
+import com.yoursole1.service.JDAService;
+import com.yoursole1.service.ModeratorService;
 import net.dv8tion.jda.api.entities.Member;
 
 import java.util.Locale;

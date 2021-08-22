@@ -16,7 +16,6 @@ import net.dv8tion.jda.api.utils.Compression;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
 import javax.security.auth.login.LoginException;
-import java.awt.*;
 import java.util.Map;
 import java.util.Objects;
 
@@ -25,6 +24,7 @@ import java.util.Objects;
 public final class JDAService {
 
     private static JDAService instance;
+    public static final int COLOR = 2_871_056;
 
     private JDA jda;
 
@@ -46,18 +46,19 @@ public final class JDAService {
     }
 
     public static MessageEmbed createEmbed(Map<String,String> content){
+
         Guild guild = instance.jda.getGuilds().get(0);
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setTitle("Moderation Bot");
         embedBuilder.setDescription("This is in BETA - DM Yoursole1#7254 with issues");
         embedBuilder.setThumbnail(guild.getIconUrl());
 
-        for (String field : content.keySet()){
-            embedBuilder.addField(field, content.get(field),false);
+        for (Map.Entry<String, String> field : content.entrySet()){
+            embedBuilder.addField(field.getKey(), content.get(field.getValue()),false);
         }
 
-        embedBuilder.setFooter("Created with \u2665 by Yoursole1#7254");
-        embedBuilder.setColor(new Color(2871056));
+        embedBuilder.setFooter("Created with ♥ by Yoursole1#7254");
+        embedBuilder.setColor(COLOR);
         return embedBuilder.build();
     }
 

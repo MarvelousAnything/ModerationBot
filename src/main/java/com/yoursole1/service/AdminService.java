@@ -15,4 +15,8 @@ public final class AdminService extends AbstractStaticFileMemberService {
         }
         return instance;
     }
+
+    static {
+        getInstance();
+    }
 }

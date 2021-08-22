@@ -18,6 +18,10 @@ public final class BannedWordService extends AbstractStaticFileService<String, I
         return instance;
     }
 
+    static {
+        getInstance();
+    }
+
     @Override
     public void add(String word) {
         getRepository().save(word);

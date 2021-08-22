@@ -7,7 +7,6 @@ import com.yoursole1.command.exception.UnableToInvokeCommandException;
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Objects;
 

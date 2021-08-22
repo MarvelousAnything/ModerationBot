@@ -17,7 +17,7 @@ public interface StaticFileRepository extends Repository<String, Integer> {
         try {
             input = Files.lines(getDatabasePath());
         } catch (IOException e) {
-            e.printStackTrace();
+            getLogger().error("Could not access file", e);
         }
         return input;
     }
@@ -26,9 +26,9 @@ public interface StaticFileRepository extends Repository<String, Integer> {
     default void save(String string) {
         string = string + System.lineSeparator();
         try {
-            Files.write(getDatabasePath(), string.getBytes(), StandardOpenOption.APPEND);
+            Files.writeString(getDatabasePath(), string, StandardOpenOption.APPEND);
         } catch (IOException e) {
-            e.printStackTrace();
+            getLogger().error("Could not access file", e);
         }
     }
 
@@ -37,7 +37,7 @@ public interface StaticFileRepository extends Repository<String, Integer> {
         try {
             Files.write(getDatabasePath(), strings, StandardOpenOption.APPEND);
         } catch (IOException e) {
-            e.printStackTrace();
+            getLogger().error("Could not access file", e);
         }
     }
 
@@ -49,7 +49,7 @@ public interface StaticFileRepository extends Repository<String, Integer> {
         try {
             Files.write(getDatabasePath(), filtered, StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING);
         } catch (IOException e) {
-            e.printStackTrace();
+            getLogger().error("Could not access file", e);
         }
     }
 
@@ -65,7 +65,7 @@ public interface StaticFileRepository extends Repository<String, Integer> {
             Files.deleteIfExists(getDatabasePath());
             Files.createFile(getDatabasePath());
         } catch (IOException e) {
-            e.printStackTrace();
+            getLogger().error("Could not access file", e);
         }
     }
 

@@ -1,10 +1,13 @@
 package com.yoursole1.repository;
 
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+@Slf4j
 @Getter
 public class AdminRepositoryImpl implements AdminRepository {
     private static AdminRepositoryImpl instance;
@@ -23,5 +26,10 @@ public class AdminRepositoryImpl implements AdminRepository {
             instance = new AdminRepositoryImpl();
         }
         return instance;
+    }
+
+    @Override
+    public Logger getLogger() {
+        return log;
     }
 }
