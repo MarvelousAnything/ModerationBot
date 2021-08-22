@@ -1,13 +1,14 @@
-package main.service;
+package com.yoursole1.service;
 
+import com.yoursole1.event.GuildMessageEvent;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import main.event.GuildMessageEvent;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
@@ -17,6 +18,7 @@ import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import javax.security.auth.login.LoginException;
 import java.awt.*;
 import java.util.Map;
+import java.util.Objects;
 
 @Slf4j
 @Getter
@@ -29,7 +31,7 @@ public final class JDAService {
     private JDAService() {
         try {
             JDABuilder builder = JDABuilder
-                    .createDefault(System.getenv("MODERATION_BOT_TOKEN"))
+                    .createDefault(System.getenv("BOT_TOKEN"))
                     .disableCache(CacheFlag.MEMBER_OVERRIDES, CacheFlag.VOICE_STATE)
                     .setChunkingFilter(ChunkingFilter.ALL)
                     .setBulkDeleteSplittingEnabled(false)
@@ -50,7 +52,7 @@ public final class JDAService {
         embedBuilder.setDescription("This is in BETA - DM Yoursole1#7254 with issues");
         embedBuilder.setThumbnail(guild.getIconUrl());
 
-        for(String field : content.keySet()){
+        for (String field : content.keySet()){
             embedBuilder.addField(field, content.get(field),false);
         }
 
@@ -60,10 +62,19 @@ public final class JDAService {
     }
 
     public static synchronized JDAService getInstance() {
-        if (instance == null) {
+        if (Objects.isNull(instance)) {
             instance = new JDAService();
         }
         return instance;
+    }
+
+    public static Member tagToMember(String tag) {
+        return JDAService
+                .getInstance()
+                .getJda()
+                .getGuilds()
+                .get(0)
+                .getMemberByTag(tag);
     }
 
 

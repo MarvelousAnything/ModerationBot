@@ -13,7 +13,7 @@
             <manifest>
               <addClasspath>true</addClasspath>
               <classpathPrefix>lib/</classpathPrefix>
-              <mainClass>main.main</mainClass>
+              <mainClass>com.yoursole1.Main</mainClass>
             </manifest>
           </archive>
         </configuration>
@@ -30,7 +30,7 @@
             <configuration>
               <transformers>
                 <transformer>
-                  <mainClass>main.main</mainClass>
+                  <mainClass>com.yoursole1.Main</mainClass>
                 </transformer>
               </transformers>
             </configuration>

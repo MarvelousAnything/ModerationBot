@@ -1,4 +1,4 @@
-package main.repository;
+package com.yoursole1.repository;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -24,6 +24,7 @@ public interface StaticFileRepository extends Repository<String, Integer> {
 
     @Override
     default void save(String string) {
+        string = string + System.lineSeparator();
         try {
             Files.write(getDatabasePath(), string.getBytes(), StandardOpenOption.APPEND);
         } catch (IOException e) {
@@ -42,7 +43,9 @@ public interface StaticFileRepository extends Repository<String, Integer> {
 
     @Override
     default void delete(String string) {
-        List<String> filtered = openDatabaseStream().filter(item -> !item.equals(string)).collect(Collectors.toList());
+        List<String> filtered = openDatabaseStream()
+                .filter(item -> !item.equals(string))
+                .collect(Collectors.toList());
         try {
             Files.write(getDatabasePath(), filtered, StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING);
         } catch (IOException e) {

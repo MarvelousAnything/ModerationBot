@@ -1,4 +1,4 @@
-package main.repository;
+package com.yoursole1.repository;
 
 import lombok.Getter;
 

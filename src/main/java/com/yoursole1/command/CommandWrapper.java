@@ -1,20 +1,24 @@
 package com.yoursole1.command;
 
 import com.yoursole1.command.annotation.Command;
+import com.yoursole1.command.exception.UnableToInvokeCommandException;
 import com.yoursole1.command.exception.NotACommandException;
+import com.yoursole1.service.AdminService;
+import com.yoursole1.service.ModeratorService;
 import lombok.Getter;
-import net.dv8tion.jda.api.Permission;
+import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Objects;
+import java.util.Locale;
 
+@Slf4j
 @Getter
 public class CommandWrapper {
-    private Method method;
-    private Command command;
+    private final Method method;
+    private final Command command;
 
     public CommandWrapper(Method method) throws NotACommandException {
         if (!isCommand(method)) {
@@ -39,26 +43,38 @@ public class CommandWrapper {
         }
     }
 
-    public String execute(Object[] parameters) throws InvocationTargetException, IllegalAccessException {
-        if (parameters.length == 0) {
-            return (String) method.invoke(null);
-        }
-        if (parameters.length != method.getParameterCount()) {
-            return "Wrong number of arguments, expected "
-                    + method.getParameterCount()
-                    + " but got " + parameters.length;
-        } else {
-            return (String) method.invoke(null, parameters);
+    public String execute(Object[] parameters) throws UnableToInvokeCommandException {
+        try {
+            if (parameters.length == 0) {
+                return (String) method.invoke(null);
+            }
+            if (parameters.length != method.getParameterCount()) {
+                return "Wrong number of arguments, expected "
+                        + method.getParameterCount()
+                        + " but got " + parameters.length;
+            } else {
+                return (String) method.invoke(null, parameters);
+            }
+        } catch (InvocationTargetException | IllegalAccessException e) {
+            log.error("Unable to invoke command", new UnableToInvokeCommandException(e));
+            throw new UnableToInvokeCommandException(e);
         }
     }
 
-    public String execute(String input) throws InvocationTargetException, IllegalAccessException {
+    public String execute(String input) throws UnableToInvokeCommandException {
         return execute(getParameters(input));
     }
 
     public boolean checkPermissions(GuildMessageReceivedEvent event) {
-        return Objects.requireNonNull(event.getMember())
-                .hasPermission(Permission.getPermissions(command.permissions()));
+        return switch (command.permissions().toLowerCase(Locale.ROOT)) {
+            case "moderator" -> ModeratorService.getInstance()
+                    .contains(event.getMember()) ||
+            AdminService.getInstance()
+                    .contains(event.getMember());
+            case "none" -> true;
+            default -> AdminService.getInstance()
+                    .contains(event.getMember());
+        };
     }
 
     public String getName() {

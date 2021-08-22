@@ -1,4 +1,4 @@
-package main.repository;
+package com.yoursole1.repository;
 
 import lombok.Getter;
 
@@ -7,8 +7,8 @@ import java.nio.file.Paths;
 
 @Getter
 public class BannedWordRepositoryImpl implements BannedWordRepository {
-    private final Path databasePath;
     private static BannedWordRepositoryImpl instance;
+    private final Path databasePath;
 
     public BannedWordRepositoryImpl(Path databasePath) {
         this.databasePath = databasePath;

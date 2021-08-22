@@ -1,6 +1,6 @@
-package main.service;
+package com.yoursole1.service;
 
-import main.repository.Repository;
+import com.yoursole1.repository.Repository;
 
 import java.io.Serializable;
 import java.util.List;
@@ -25,4 +25,8 @@ public interface Service<T, ID extends Serializable> {
     T find(ID id);
 
     List<T> findAll();
+
+    default boolean contains(T object) {
+        return findAll().contains(object);
+    }
 }

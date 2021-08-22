@@ -1,6 +1,6 @@
-package main.service;
+package com.yoursole1.service;
 
-import main.repository.ModeratorRepositoryImpl;
+import com.yoursole1.repository.ModeratorRepositoryImpl;
 
 public final class ModeratorService extends AbstractStaticFileMemberService {
     private static ModeratorService instance;

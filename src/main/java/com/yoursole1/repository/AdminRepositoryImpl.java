@@ -1,4 +1,4 @@
-package main.repository;
+package com.yoursole1.repository;
 
 import lombok.Getter;
 
@@ -7,8 +7,8 @@ import java.nio.file.Paths;
 
 @Getter
 public class AdminRepositoryImpl implements AdminRepository {
-    private final Path databasePath;
     private static AdminRepositoryImpl instance;
+    private final Path databasePath;
 
     public AdminRepositoryImpl(Path databasePath) {
         this.databasePath = databasePath;

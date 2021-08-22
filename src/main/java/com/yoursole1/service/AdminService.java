@@ -1,6 +1,6 @@
-package main.service;
+package com.yoursole1.service;
 
-import main.repository.AdminRepositoryImpl;
+import com.yoursole1.repository.AdminRepositoryImpl;
 
 public final class AdminService extends AbstractStaticFileMemberService {
     private static AdminService instance;

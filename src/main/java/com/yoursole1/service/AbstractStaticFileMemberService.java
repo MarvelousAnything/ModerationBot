@@ -1,7 +1,6 @@
-package main.service;
+package com.yoursole1.service;
 
-import main.repository.StaticFileRepository;
-import net.dv8tion.jda.api.entities.Guild;
+import com.yoursole1.repository.StaticFileRepository;
 import net.dv8tion.jda.api.entities.Member;
 
 import java.util.List;
@@ -11,10 +10,6 @@ import java.util.stream.Collectors;
 public abstract class AbstractStaticFileMemberService extends AbstractStaticFileService<Member, Integer> {
 
     public static final Function<Member, String> memberToTag = member -> member.getUser().getAsTag();
-    public static final Function<String, Member> tagToMember = tag -> {
-        Guild guild = JDAService.getInstance().getJda().getGuilds().get(0);
-        return guild.getMemberByTag(tag);
-    };
 
     AbstractStaticFileMemberService(StaticFileRepository repository) {
         super(repository);
@@ -43,7 +38,7 @@ public abstract class AbstractStaticFileMemberService extends AbstractStaticFile
 
     @Override
     public Member find(Integer id) {
-        return tagToMember.apply(getRepository().get(id));
+        return JDAService.tagToMember(getRepository().get(id));
     }
 
     @Override
@@ -51,7 +46,7 @@ public abstract class AbstractStaticFileMemberService extends AbstractStaticFile
         return getRepository()
                 .getAll()
                 .stream()
-                .map(tagToMember)
+                .map(JDAService::tagToMember)
                 .collect(Collectors.toList());
     }
 }

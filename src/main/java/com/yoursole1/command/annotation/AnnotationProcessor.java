@@ -1,7 +1,7 @@
 package com.yoursole1.command.annotation;
 
-import com.yoursole1.command.exception.CommandException;
 import com.yoursole1.command.CommandWrapper;
+import com.yoursole1.command.exception.CommandException;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
