@@ -54,7 +54,7 @@ public final class JDAService {
         embedBuilder.setThumbnail(guild.getIconUrl());
 
         for (Map.Entry<String, String> field : content.entrySet()){
-            embedBuilder.addField(field.getKey(), content.get(field.getValue()),false);
+            embedBuilder.addField(field.getKey(), field.getValue(),false);
         }
 
         embedBuilder.setFooter("Created with ♥ by Yoursole1#7254");
